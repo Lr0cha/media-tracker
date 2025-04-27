@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Clapperboard } from "lucide-react";
 import Link from "next/link";
 
-const Login = () => {
+const Register = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4">
       <div className="mb-8">
@@ -13,24 +13,26 @@ const Login = () => {
 
       <Card className="w-full max-w-md p-6 bg-card relative">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl">Sign up</CardTitle>
         </CardHeader>
 
         <CardContent className="space-y-4">
+          <Input placeholder="Username" type="username" />
           <Input placeholder="Email address" type="email" />
-          <Input placeholder="Password" type="password" />
+          <Input placeholder="Password" type="newPassword" />
+          <Input placeholder="Confirm password" type="confirmPassword" />
 
           <Button className="w-full bg-secondary cursor-pointer hover:bg-primary/90">
-            Login
+            Sign up
           </Button>
 
           <p className="text-sm text-center text-muted-foreground">
-            Don't have an account?{" "}
+            Already have an account?{" "}
             <Link
-              href="/register"
+              href="/"
               className="ml-2 text-destructive hover:underline font-medium"
             >
-              Sign up.
+              Sign in.
             </Link>
           </p>
         </CardContent>
@@ -39,4 +41,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
