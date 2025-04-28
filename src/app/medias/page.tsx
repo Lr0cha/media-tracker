@@ -1,5 +1,5 @@
 const Medias = () => {
-  return <div>Medias</div>;
+  return <div>medias</div>;
 };
 
 export default Medias;

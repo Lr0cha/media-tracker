@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Media Tracker",
   description:
-    "An easy and organized way to track your favorite anime, manga, movies, and TV shows.",
+    "An easy and organized way to track your favorite anime, manga, movies, and series.",
 };
 
 export default function RootLayout({
@@ -14,7 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>{children}</body>
+      <body className={cn("min-h-screen bg-background antialiased")}>
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,42 +1,44 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Clapperboard } from "lucide-react";
-import Link from "next/link";
+import Navbar from "@/components/navbar";
+import { Film, BookOpen, Tv, MonitorPlay } from "lucide-react";
 
-const Login = () => {
+const Home = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4">
-      <div className="mb-8">
-        <Clapperboard className=" w-8 h-8 sm:w-13 sm:h-13 text-destructive" />
-      </div>
+    <div className="min-h-screen">
+      <Navbar />
+      <header className="mt-30 text-center flex flex-col items-center gap-6">
+        <h2 className="text-2xl md:text-4xl font-bold">
+          Want to follow your favorite content?
+        </h2>
+        <p className="text-md md:text-xl text-neutral-400 max-w-md">
+          An easy and organized way to{" "}
+          <span className="text-destructive font-semibold">track</span> your
+          favorite anime, manga, movies, and series.
+        </p>
 
-      <Card className="w-full max-w-md p-6 bg-card relative">
-        <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
-        </CardHeader>
-
-        <CardContent className="space-y-4">
-          <Input placeholder="Email address" type="email" />
-          <Input placeholder="Password" type="password" />
-
-          <Button className="w-full bg-secondary cursor-pointer hover:bg-primary/90">
-            Login
-          </Button>
-
-          <p className="text-sm text-center text-muted-foreground">
-            Don't have an account?{" "}
-            <Link
-              href="/register"
-              className="ml-2 text-destructive hover:underline font-medium"
-            >
-              Sign up.
-            </Link>
-          </p>
-        </CardContent>
-      </Card>
+        <div className="flex flex-wrap gap-4 justify-center mt-6">
+          <ButtonItem icon={<Tv size={20} />} text="Animes" />
+          <ButtonItem icon={<BookOpen size={20} />} text="Mangas" />
+          <ButtonItem icon={<MonitorPlay size={20} />} text="Series" />
+          <ButtonItem icon={<Film size={20} />} text="Filmes" />
+        </div>
+      </header>
     </div>
   );
 };
 
-export default Login;
+const ButtonItem = ({
+  icon,
+  text,
+}: {
+  icon: React.ReactNode;
+  text: string;
+}) => {
+  return (
+    <button className="flex items-center gap-2 px-4 py-2 border rounded-full border-white/20 text-white hover:bg-white/10 hover:text-secondary/90 transition">
+      {icon}
+      <span className="text-sm">{text}</span>
+    </button>
+  );
+};
+
+export default Home;
