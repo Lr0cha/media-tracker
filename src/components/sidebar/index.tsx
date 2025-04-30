@@ -1,10 +1,8 @@
 import {
   PanelBottom,
-  Film,
-  MonitorPlay,
+  Search,
   BookOpen,
   Tv,
-  StepForward,
   Clapperboard,
   LogOut,
 } from "lucide-react";
@@ -13,11 +11,9 @@ import { Sheet, SheetTrigger, SheetTitle, SheetContent } from "../ui/sheet";
 import Link from "next/link";
 
 const navItems = [
-  { icon: StepForward, label: "All" },
+  { icon: Search, label: "Search" },
   { icon: Tv, label: "Animes" },
   { icon: BookOpen, label: "Mangas" },
-  { icon: Film, label: "Movies" },
-  { icon: MonitorPlay, label: "Series" },
 ];
 
 const SidebarContent = () => (
@@ -38,7 +34,11 @@ const SidebarContent = () => (
           className="flex w-3/4 items-center justify-center gap-2 bg-transparent text-accent-foreground"
         >
           <Icon className="h-5 w-5" />
-          {label}
+          {label === "Search" ? (
+            <Link href="/search">{label}</Link>
+          ) : (
+            <span>{label}</span>
+          )}
         </Button>
       ))}
     </div>

@@ -1,5 +1,5 @@
 import Navbar from "@/components/navbar";
-import { Film, BookOpen, Tv, MonitorPlay } from "lucide-react";
+import { BookOpen, Tv } from "lucide-react";
 
 const Home = () => {
   return (
@@ -12,14 +12,12 @@ const Home = () => {
         <p className="text-md md:text-xl text-neutral-400 max-w-md">
           An easy and organized way to{" "}
           <span className="text-destructive font-semibold">track</span> your
-          favorite anime, manga, movies, and series.
+          favorite anime and mangas.
         </p>
 
         <div className="flex flex-wrap gap-4 justify-center mt-6">
           <ButtonItem icon={<Tv size={20} />} text="Animes" />
           <ButtonItem icon={<BookOpen size={20} />} text="Mangas" />
-          <ButtonItem icon={<MonitorPlay size={20} />} text="Series" />
-          <ButtonItem icon={<Film size={20} />} text="Filmes" />
         </div>
       </header>
     </div>

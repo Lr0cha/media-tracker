@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Media Tracker",
   description:
-    "An easy and organized way to track your favorite anime, manga, movies, and series.",
+    "An easy and organized way to track your favorite anime and mangas.",
 };
 
 export default function RootLayout({
