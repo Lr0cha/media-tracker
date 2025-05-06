@@ -1,4 +1,4 @@
-export interface MediaCardProps {
+export interface ListMediaCard {
   title: string;
   coverImage: string;
   type: "anime" | "manga";

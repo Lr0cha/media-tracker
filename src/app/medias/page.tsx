@@ -1,8 +1,8 @@
 import Sidebar from "@/components/sidebar";
 import MediaCard from "@/components/mediaCard";
-import { MediaCardProps } from "@/types/mediaCardProps";
+import { ListMediaCard } from "@/types/card";
 
-const mediaList: MediaCardProps[] = [
+const mediaList: ListMediaCard[] = [
   {
     title: "Manga example",
     coverImage: "/example.jpg",

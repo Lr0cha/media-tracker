@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Select,
   SelectTrigger,
@@ -6,20 +8,20 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
-const SelectType = () => {
-  return (
-    <div>
-      <Select required>
-        <SelectTrigger id="type">
-          <SelectValue placeholder="Type" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="anime">Anime</SelectItem>
-          <SelectItem value="manga">Manga</SelectItem>
-        </SelectContent>
-      </Select>
-    </div>
-  );
-};
+interface Props {
+  defaultValue?: "ANIME" | "MANGA";
+}
 
-export default SelectType;
+export default function SelectTypeClient({ defaultValue = "ANIME" }: Props) {
+  return (
+    <Select name="mediaType" defaultValue={defaultValue}>
+      <SelectTrigger className="w-[100px] z-30">
+        <SelectValue placeholder="Type" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="ANIME">Anime</SelectItem>
+        <SelectItem value="MANGA">Manga</SelectItem>
+      </SelectContent>
+    </Select>
+  );
+}

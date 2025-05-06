@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MediaCardProps } from "@/types/mediaCardProps";
+import { ListMediaCard } from "@/types/card";
 
 const MediaCard = ({
   title,
@@ -9,7 +9,7 @@ const MediaCard = ({
   type,
   status,
   progress,
-}: MediaCardProps) => {
+}: ListMediaCard) => {
   const [hovered, setHovered] = useState(false);
 
   return (

@@ -1,28 +1,76 @@
-import FetchCard from "@/components/fetchCard";
-import SelectType from "@/components/selectTypeMedia";
 import Sidebar from "@/components/sidebar";
-import { Button } from "@/components/ui/button";
+import SelectTypeClient from "@/components/selectTypeMedia";
+import FetchCard from "@/components/fetchCard";
+import { searchMedia } from "./action";
+import { ApiProps } from "@/types/api";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
+import { sanitizeMediaType } from "@/utils/validate";
 
-const SearchPage = () => {
+export default async function SearchPage({
+  searchParams, //params url
+}: {
+  searchParams: { search?: string; mediaType?: string };
+}) {
+  // Await searchParams
+  const { search, mediaType } = await searchParams;
+
+  const query = search || "";
+  const sanitizedMediaType = sanitizeMediaType(mediaType);
+
+  let results: ApiProps[] = [];
+
+  if (query) {
+    results = await searchMedia(query, sanitizedMediaType);
+  }
+
   return (
     <div>
       <Sidebar />
       <div className="flex flex-col sm:ml-[20%] min-h-screen p-6">
-        <div className="flex mx-auto gap-2">
-          <SelectType />
-          <Input placeholder="Search for medias" className="w-2/3 md:w-100" />
-          <Button className="bg-secondary hover:scale-105">
+        <form className="flex mx-auto gap-2 w-full max-w-3xl">
+          <SelectTypeClient defaultValue={sanitizedMediaType} />
+          <Input
+            name="search"
+            placeholder="Search for medias"
+            defaultValue={query}
+          />
+          <Button
+            type="submit"
+            className="bg-secondary hover:scale-105 cursor-pointer"
+          >
             <Search />
           </Button>
-        </div>
+        </form>
+
         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-4 place-items-center">
-          <FetchCard />
+          {results.length > 0 ? (
+            results.map((media) => (
+              <FetchCard
+                key={media.id}
+                data={media}
+                mediaType={sanitizedMediaType}
+              />
+            ))
+          ) : (
+            <p className="text-muted-foreground">
+              Nenhum resultado encontrado.
+            </p>
+          )}
         </div>
+        <p className="fixed bottom-3 text-sm text-muted-foreground text-center mt-10">
+          Dados fornecidos por{" "}
+          <a
+            href="https://anilist.co"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            AniList.co
+          </a>
+        </p>
       </div>
     </div>
   );
-};
-
-export default SearchPage;
+}
