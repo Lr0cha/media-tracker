@@ -11,13 +11,13 @@ import { sanitizeMediaType } from "@/utils/validate";
 export default async function SearchPage({
   searchParams, //params url
 }: {
-  searchParams: { search?: string; mediaType?: string };
+  searchParams: { search?: string; type?: string };
 }) {
   // Await searchParams
-  const { search, mediaType } = await searchParams;
+  const { search, type } = await searchParams;
 
   const query = search || "";
-  const sanitizedMediaType = sanitizeMediaType(mediaType);
+  const sanitizedMediaType = sanitizeMediaType(type);
 
   let results: ApiProps[] = [];
 

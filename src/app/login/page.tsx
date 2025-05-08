@@ -7,14 +7,20 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginFormData, LoginFormSchema } from "./login-validators";
+import { useSearchParams } from "next/navigation";
+import { login } from "../actions/login";
 
-const LoginPage = () => {
+export default function LoginPage() {
+  const searchParams = useSearchParams();
+
+  const errorAuth = searchParams.get("message");
+
   const form = useForm<LoginFormData>({
     resolver: zodResolver(LoginFormSchema),
   });
 
   async function onSubmit(data: LoginFormData) {
-    console.log(data);
+    await login(data); // call server action
   }
 
   return (
@@ -54,6 +60,11 @@ const LoginPage = () => {
                 </p>
               )}
             </div>
+            {errorAuth && (
+              <p className="text-sm font-medium text-destructive">
+                {errorAuth}
+              </p>
+            )}
 
             <Button className="w-full bg-secondary cursor-pointer hover:bg-primary/90">
               Login
@@ -73,6 +84,4 @@ const LoginPage = () => {
       </Card>
     </div>
   );
-};
-
-export default LoginPage;
+}

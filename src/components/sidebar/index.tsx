@@ -9,6 +9,7 @@ import {
 import { Button } from "../ui/button";
 import { Sheet, SheetTrigger, SheetTitle, SheetContent } from "../ui/sheet";
 import Link from "next/link";
+import { signOut } from "@/app/actions/sign-out";
 
 const navItems = [
   { icon: Search, label: "Search" },
@@ -19,7 +20,7 @@ const navItems = [
 const SidebarContent = () => (
   <div className="flex w-full flex-col font-medium gap-6 text-lg px-2 py-3">
     <Link
-      href="#"
+      href="/"
       className="flex w-10 h-10 bg-secondary items-center justify-center rounded-full text-accent-foreground"
       prefetch={false}
     >
@@ -44,14 +45,16 @@ const SidebarContent = () => (
     </div>
 
     <div className="absolute bottom-10 right-5">
-      <button>
-        <LogOut className="h-10 w-10 cursor-pointer hover:scale-105 hover:text-destructive active:scale-95 duration-200" />
-      </button>
+      <form action={signOut}>
+        <button>
+          <LogOut className="h-10 w-10 cursor-pointer hover:scale-105 hover:text-destructive active:scale-95 duration-200" />
+        </button>
+      </form>
     </div>
   </div>
 );
 
-const Sidebar = () => {
+function Sidebar() {
   return (
     <div className="flex w-full items-center bg-muted/40">
       {/* Desktop */}
@@ -79,6 +82,6 @@ const Sidebar = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Sidebar;

@@ -33,7 +33,7 @@ const mediaList: ListMediaCard[] = [
   },
 ];
 
-const MediaPage = () => {
+export default function MediaPage() {
   return (
     <div>
       <Sidebar />
@@ -46,6 +46,4 @@ const MediaPage = () => {
       </div>
     </div>
   );
-};
-
-export default MediaPage;
+}

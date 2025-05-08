@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { SignUpFormData, SignUpFormSchema } from "./sign-up-validators";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signup } from "../actions/sign-up";
 
 const SingUpPage = () => {
   const form = useForm<SignUpFormData>({
@@ -14,7 +15,7 @@ const SingUpPage = () => {
   });
 
   async function onSubmit(data: SignUpFormData) {
-    console.log(data);
+    await signup(data);
   }
 
   return (
