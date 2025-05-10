@@ -1,5 +1,4 @@
-import Sidebar from "@/components/sidebar";
-import MediaCard from "@/components/mediaCard";
+import MediaCard from "@/components/media-card";
 import { ListMediaCard } from "@/types/card";
 
 const mediaList: ListMediaCard[] = [
@@ -35,14 +34,11 @@ const mediaList: ListMediaCard[] = [
 
 export default function MediaPage() {
   return (
-    <div>
-      <Sidebar />
-      <div className="relative sm:ml-[20%] min-h-screen p-6">
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-4 place-items-center">
-          {mediaList.map((media, index) => (
-            <MediaCard key={index} {...media} />
-          ))}
-        </div>
+    <div className="relative sm:ml-[20%] min-h-screen p-6">
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-4 place-items-center">
+        {mediaList.map((media, index) => (
+          <MediaCard key={index} {...media} />
+        ))}
       </div>
     </div>
   );

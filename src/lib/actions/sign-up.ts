@@ -2,12 +2,15 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
-import { LoginFormData, LoginFormSchema } from "../login/login-validators";
+import {
+  SignUpFormData,
+  SignUpFormSchema,
+} from "@/lib/validators/sign-up-validators";
 
-export async function login(formData: LoginFormData) {
+export async function signup(formData: SignUpFormData) {
   const supabase = await createClient();
 
-  const parsedData = LoginFormSchema.safeParse(formData);
+  const parsedData = SignUpFormSchema.safeParse(formData);
 
   if (!parsedData.success) {
     return { error: parsedData.error.message };
@@ -15,15 +18,13 @@ export async function login(formData: LoginFormData) {
 
   const { data } = parsedData;
 
-  const { error } = await supabase.auth.signInWithPassword({
+  const { error } = await supabase.auth.signUp({
     email: data.email,
-    password: data.password,
+    password: data.newPassword,
   });
-
   if (error) {
-    redirect("/login?message=Could not authenticate user");
+    redirect("/register?message=Error signing up");
   }
-
   revalidatePath("/", "layout");
-  redirect("/search");
+  redirect("/login");
 }

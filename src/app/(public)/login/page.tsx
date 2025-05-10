@@ -5,17 +5,25 @@ import { Input } from "@/components/ui/input";
 import { Clapperboard } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { SignUpFormData, SignUpFormSchema } from "./sign-up-validators";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signup } from "../actions/sign-up";
+import {
+  LoginFormData,
+  LoginFormSchema,
+} from "@/lib/validators/login-validators";
+import { useSearchParams } from "next/navigation";
+import { login } from "@/lib/actions/login";
 
-const SingUpPage = () => {
-  const form = useForm<SignUpFormData>({
-    resolver: zodResolver(SignUpFormSchema),
+export default function LoginPage() {
+  const searchParams = useSearchParams();
+
+  const errorAuth = searchParams.get("message");
+
+  const form = useForm<LoginFormData>({
+    resolver: zodResolver(LoginFormSchema),
   });
 
-  async function onSubmit(data: SignUpFormData) {
-    await signup(data);
+  async function onSubmit(data: LoginFormData) {
+    await login(data); // call server action
   }
 
   return (
@@ -26,7 +34,7 @@ const SingUpPage = () => {
 
       <Card className="w-full max-w-md p-6 bg-card relative">
         <CardHeader>
-          <CardTitle className="text-2xl">Sign up</CardTitle>
+          <CardTitle className="text-2xl">Login</CardTitle>
         </CardHeader>
 
         <CardContent>
@@ -47,45 +55,36 @@ const SingUpPage = () => {
               <Input
                 placeholder="Password"
                 type="password"
-                {...form.register("newPassword")}
+                {...form.register("password")}
               />
-              {form.formState.errors.newPassword && (
+              {form.formState.errors.password && (
                 <p className="text-red-500 text-sm">
-                  {form.formState.errors.newPassword.message}
+                  {form.formState.errors.password.message}
                 </p>
               )}
             </div>
-            <div className="flex flex-col gap-0.5">
-              <Input
-                placeholder="Confirm password"
-                type="password"
-                {...form.register("confirmPassword")}
-              />
-              {form.formState.errors.confirmPassword && (
-                <p className="text-red-500 text-sm">
-                  {form.formState.errors.confirmPassword.message}
-                </p>
-              )}
-            </div>
+            {errorAuth && (
+              <p className="text-sm font-medium text-destructive">
+                {errorAuth}
+              </p>
+            )}
 
             <Button className="w-full bg-secondary cursor-pointer hover:bg-primary/90">
-              Sign up
+              Login
             </Button>
           </form>
 
           <p className="text-sm text-center text-muted-foreground">
-            Already have an account?{" "}
+            Don't have an account?{" "}
             <Link
-              href="/login"
+              href="/register"
               className="ml-2 text-destructive hover:underline font-medium"
             >
-              Sign in.
+              Sign up.
             </Link>
           </p>
         </CardContent>
       </Card>
     </div>
   );
-};
-
-export default SingUpPage;
+}

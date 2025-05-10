@@ -9,7 +9,7 @@ import {
 import { Button } from "../ui/button";
 import { Sheet, SheetTrigger, SheetTitle, SheetContent } from "../ui/sheet";
 import Link from "next/link";
-import { signOut } from "@/app/actions/sign-out";
+import { signOut } from "@/lib/actions/sign-out";
 
 const navItems = [
   { icon: Search, label: "Search" },
