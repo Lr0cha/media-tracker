@@ -10,9 +10,10 @@ import {
   SignUpFormSchema,
 } from "@/lib/validators/sign-up-validators";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signup } from "@/lib/actions/sign-up";
+import { signup } from "@/lib/actions/auth/sign-up";
+import { Suspense } from "react";
 
-const SingUpPage = () => {
+function SingUpContent() {
   const form = useForm<SignUpFormData>({
     resolver: zodResolver(SignUpFormSchema),
   });
@@ -89,6 +90,14 @@ const SingUpPage = () => {
       </Card>
     </div>
   );
-};
+}
 
-export default SingUpPage;
+export default function SingUpPage() {
+  return (
+    <div>
+      <Suspense>
+        <SingUpContent />
+      </Suspense>
+    </div>
+  );
+}

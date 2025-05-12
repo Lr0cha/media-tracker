@@ -9,12 +9,13 @@ import {
 } from "@/components/ui/select";
 
 interface Props {
-  defaultValue?: "ANIME" | "MANGA";
+  value: string;
+  onChange: (value: string) => void;
 }
 
-export default function SelectTypeClient({ defaultValue = "ANIME" }: Props) {
+export default function SelectTypeMedia({ value, onChange }: Props) {
   return (
-    <Select name="mediaType" defaultValue={defaultValue}>
+    <Select value={value} onValueChange={onChange}>
       <SelectTrigger className="w-[100px] z-30">
         <SelectValue placeholder="Type" />
       </SelectTrigger>

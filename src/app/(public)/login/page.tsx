@@ -11,9 +11,10 @@ import {
   LoginFormSchema,
 } from "@/lib/validators/login-validators";
 import { useSearchParams } from "next/navigation";
-import { login } from "@/lib/actions/login";
+import { login } from "@/lib/actions/auth/login";
+import { Suspense } from "react";
 
-export default function LoginPage() {
+function LoginContent() {
   const searchParams = useSearchParams();
 
   const errorAuth = searchParams.get("message");
@@ -85,6 +86,16 @@ export default function LoginPage() {
           </p>
         </CardContent>
       </Card>
+    </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <div>
+      <Suspense fallback={<h2>Loading...</h2>}>
+        <LoginContent />
+      </Suspense>
     </div>
   );
 }

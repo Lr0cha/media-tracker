@@ -2,7 +2,7 @@ import { BookOpen, Clapperboard, Search } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
-import { signOut } from "@/lib/actions/sign-out";
+import { signOut } from "@/lib/actions/auth/sign-out";
 
 async function Navbar() {
   const supabase = await createClient();

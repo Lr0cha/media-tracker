@@ -1,3 +1,4 @@
+//anilist API
 export interface ApiProps {
   id: number;
   title: {

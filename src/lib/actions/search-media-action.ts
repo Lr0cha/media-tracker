@@ -4,7 +4,7 @@ import { ApiProps } from "@/types/api";
 
 export async function searchMedia(
   search: string,
-  mediaType: "ANIME" | "MANGA"
+  type: "ANIME" | "MANGA"
 ): Promise<ApiProps[]> {
   const query = `
     query ($search: String, $type: MediaType) {
@@ -24,7 +24,7 @@ export async function searchMedia(
 
   const BASE_URL = "https://graphql.anilist.co";
 
-  const variables = { search, type: mediaType };
+  const variables = { search, type };
 
   try {
     const res = await fetch(BASE_URL, {

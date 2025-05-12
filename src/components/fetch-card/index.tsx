@@ -3,10 +3,8 @@ import { ApiProps } from "@/types/api";
 
 interface MediaProps {
   data: ApiProps;
-  mediaType: MediaType;
+  mediaType: "ANIME" | "MANGA";
 }
-
-type MediaType = "ANIME" | "MANGA";
 
 const FetchCard = ({ data, mediaType }: MediaProps) => {
   return (

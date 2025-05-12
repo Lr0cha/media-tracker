@@ -9,7 +9,7 @@ import {
 import { Button } from "../ui/button";
 import { Sheet, SheetTrigger, SheetTitle, SheetContent } from "../ui/sheet";
 import Link from "next/link";
-import { signOut } from "@/lib/actions/sign-out";
+import { signOut } from "@/lib/actions/auth/sign-out";
 
 const navItems = [
   { icon: Search, label: "Search" },
@@ -54,34 +54,34 @@ const SidebarContent = () => (
   </div>
 );
 
-function Sidebar() {
+export function MobileHeader() {
   return (
-    <div className="flex w-full items-center bg-muted/40">
-      {/* Desktop */}
-      <aside className="fixed inset-y-0 left-0 z-10 hidden w-1/5 border-r bg-muted/40 sm:flex">
-        <SidebarContent />
-      </aside>
-
-      {/* Mobile */}
-      <div className="sm:hidden flex items-center">
-        <header className="sticky top-0 z-30 flex h-14 items-center px-4 border-b gap-4">
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button size="icon" variant="outline">
-                <PanelBottom className="h-5 w-5" />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="sm:max-w-xl">
-              <SheetTitle className="sr-only">Sidebar</SheetTitle>
-              <SidebarContent />
-            </SheetContent>
-          </Sheet>
-          <h2 className="text-lg font-semibold">Menu</h2>
-        </header>
-      </div>
-    </div>
+    <header className="sticky top-0 z-30 flex h-14 items-center px-4 border-b gap-4 bg-background w-full">
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button size="icon" variant="outline">
+            <PanelBottom className="h-5 w-5" />
+            <span className="sr-only">Open menu</span>
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="left" className="sm:max-w-xl">
+          <SheetTitle className="sr-only">Sidebar</SheetTitle>
+          <SidebarContent />
+        </SheetContent>
+      </Sheet>
+      <h2 className="text-lg font-semibold">Menu</h2>
+    </header>
   );
 }
+
+function Sidebar() {
+  return (
+    <aside className="fixed inset-y-0 left-0 z-10 w-1/5 border-r bg-muted/40 hidden sm:flex">
+      <SidebarContent />
+    </aside>
+  );
+}
+
+Sidebar.MobileHeader = MobileHeader;
 
 export default Sidebar;
