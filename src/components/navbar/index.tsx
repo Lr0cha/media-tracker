@@ -27,7 +27,7 @@ async function Navbar() {
               <Search className="h-5 w-5" />
             </Link>
             <Link
-              href="/medias"
+              href="/medias?type=Anime"
               className="p-2 rounded-full bg-secondary text-white hover:bg-secondary/80"
             >
               <BookOpen className="h-5 w-5" />

@@ -1,6 +1,6 @@
 "use server";
 
-import { ApiProps } from "@/types/api";
+import { ApiProps } from "@/types/index";
 
 export async function searchMedia(
   search: string,

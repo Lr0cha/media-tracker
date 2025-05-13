@@ -16,7 +16,6 @@ const navItems = [
   { icon: Tv, label: "Animes" },
   { icon: BookOpen, label: "Mangas" },
 ];
-
 const SidebarContent = () => (
   <div className="flex w-full flex-col font-medium gap-6 text-lg px-2 py-3">
     <Link
@@ -28,20 +27,40 @@ const SidebarContent = () => (
     </Link>
 
     <div className="flex flex-col gap-4 items-center">
-      {navItems.map(({ icon: Icon, label }) => (
-        <Button
-          key={label}
-          variant="outline"
-          className="flex w-3/4 items-center justify-center gap-2 bg-transparent text-accent-foreground"
-        >
-          <Icon className="h-5 w-5" />
-          {label === "Search" ? (
-            <Link href="/search">{label}</Link>
-          ) : (
+      {navItems.map(({ icon: Icon, label }) => {
+        const isSearch = label === "Search";
+        const content = (
+          <div className="flex items-center justify-center gap-2 w-full">
+            <Icon className="h-5 w-5" />
             <span>{label}</span>
-          )}
-        </Button>
-      ))}
+          </div>
+        );
+
+        return isSearch ? (
+          <Button
+            asChild
+            key={label}
+            variant="outline"
+            className="flex cursor-pointer w-3/4 items-center justify-center gap-2 bg-transparent text-accent-foreground"
+          >
+            <Link href="/search">{content}</Link>
+          </Button>
+        ) : (
+          <Button
+            asChild
+            key={label}
+            variant="outline"
+            className="flex cursor-pointer w-3/4 items-center justify-center gap-2 bg-transparent text-accent-foreground"
+          >
+            <Link href={`/medias?type=${label.substring(0, 5)}`}>
+              <div className="flex items-center gap-2">
+                <Icon className="h-5 w-5" />
+                <span>{label}</span>
+              </div>
+            </Link>
+          </Button>
+        );
+      })}
     </div>
 
     <div className="absolute bottom-10 right-5">

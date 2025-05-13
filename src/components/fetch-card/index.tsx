@@ -1,5 +1,5 @@
 import AddMediaButton from "../add-media-button";
-import { ApiProps } from "@/types/api";
+import { ApiProps } from "@/types/index";
 
 interface MediaProps {
   data: ApiProps;

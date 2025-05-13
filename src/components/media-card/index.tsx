@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ListMediaCard } from "@/types/card";
+import { ListMediaCard } from "@/types/index";
 
 const MediaCard = ({
   title,

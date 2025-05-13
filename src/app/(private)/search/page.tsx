@@ -1,7 +1,7 @@
 import { searchMedia } from "@/lib/actions/search-media-action";
 import SearchBar from "@/components/search-bar";
 import FetchCard from "@/components/fetch-card";
-import { ApiProps } from "@/types/api";
+import { ApiProps } from "@/types/index";
 import { sanitizeMediaType } from "@/utils/validate";
 
 export default async function SearchPage({
