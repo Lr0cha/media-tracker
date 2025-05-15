@@ -1,12 +1,12 @@
 import DialogMediaButton from "@/components/dialog-media-btn";
 import { ApiProps } from "@/types/index";
 
-interface MediaProps {
+interface MediaApiProps {
   data: ApiProps;
   mediaType: "ANIME" | "MANGA";
 }
 
-const FetchCard = ({ data, mediaType }: MediaProps) => {
+const FetchCard = ({ data, mediaType }: MediaApiProps) => {
   return (
     <div className="flex flex-col justify-center items-center w-60 rounded-xl overflow-hidden shadow-lg bg-background border border-muted transition-transform hover:shadow-xl">
       <div className="relative h-48 w-full overflow-hidden bg-muted">

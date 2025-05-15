@@ -14,7 +14,7 @@ import { useSearchParams } from "next/navigation";
 import { login } from "@/lib/actions/auth/login";
 import { Suspense } from "react";
 
-function LoginContent() {
+const LoginContent = () => {
   const searchParams = useSearchParams();
 
   const errorAuth = searchParams.get("message");
@@ -90,14 +90,12 @@ function LoginContent() {
       </Card>
     </div>
   );
-}
+};
 
 export default function LoginPage() {
   return (
-    <div>
-      <Suspense fallback={<h2>Loading...</h2>}>
-        <LoginContent />
-      </Suspense>
-    </div>
+    <Suspense fallback={<h2>Loading...</h2>}>
+      <LoginContent />
+    </Suspense>
   );
 }

@@ -7,7 +7,13 @@ import {
   LogOut,
 } from "lucide-react";
 import { Button } from "../ui/button";
-import { Sheet, SheetTrigger, SheetTitle, SheetContent } from "../ui/sheet";
+import {
+  Sheet,
+  SheetTrigger,
+  SheetTitle,
+  SheetContent,
+  SheetDescription,
+} from "../ui/sheet";
 import Link from "next/link";
 import { signOut } from "@/lib/actions/auth/sign-out";
 
@@ -16,6 +22,7 @@ const navItems = [
   { icon: Tv, label: "Animes" },
   { icon: BookOpen, label: "Mangas" },
 ];
+
 const SidebarContent = () => (
   <div className="flex w-full flex-col font-medium gap-6 text-lg px-2 py-3">
     <Link
@@ -85,6 +92,7 @@ export function MobileHeader() {
         </SheetTrigger>
         <SheetContent side="left" className="sm:max-w-xl">
           <SheetTitle className="sr-only">Sidebar</SheetTitle>
+          <SheetDescription>{undefined}</SheetDescription>
           <SidebarContent />
         </SheetContent>
       </Sheet>

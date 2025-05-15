@@ -12,8 +12,13 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signup } from "@/lib/actions/auth/sign-up";
 import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 
-function SingUpContent() {
+const SingUpContent = () => {
+  const searchParams = useSearchParams();
+
+  const errorAuth = searchParams.get("message");
+
   const form = useForm<SignUpFormData>({
     resolver: zodResolver(SignUpFormSchema),
   });
@@ -72,6 +77,11 @@ function SingUpContent() {
                   {form.formState.errors.confirmPassword.message}
                 </p>
               )}
+              {errorAuth && (
+                <p className="text-sm font-medium text-destructive">
+                  {errorAuth}
+                </p>
+              )}
             </div>
 
             <Button className="w-full bg-secondary cursor-pointer hover:bg-primary/90">
@@ -92,14 +102,12 @@ function SingUpContent() {
       </Card>
     </div>
   );
-}
+};
 
 export default function SingUpPage() {
   return (
-    <div>
-      <Suspense fallback={<h2>Loading</h2>}>
-        <SingUpContent />
-      </Suspense>
-    </div>
+    <Suspense>
+      <SingUpContent />
+    </Suspense>
   );
 }

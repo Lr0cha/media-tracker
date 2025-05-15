@@ -12,14 +12,14 @@ export default async function MediaPage({
 }) {
   const supabase = await createClient();
 
-  // fetching data
+  // fetching data from db
   const { data: medias } = await supabase
     .from("medias")
     .select()
     .order("title");
 
   const mediaType: string = sanitizeMediaType(
-    (await searchParams).type?.toUpperCase() || "ANIME"
+    (await searchParams).type?.toUpperCase()
   );
 
   if (medias) {

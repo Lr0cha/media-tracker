@@ -66,7 +66,7 @@ const DialogMediaButton = ({
       await addMedia(data);
     }
 
-    form.reset();
+    form.reset(); //clean form fields
     setOpen(false);
     onClose?.();
   };

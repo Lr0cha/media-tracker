@@ -1,7 +1,22 @@
 import Navbar from "@/components/navbar";
 import { BookOpen, Tv } from "lucide-react";
 
-const Home = () => {
+const ButtonItem = ({
+  icon,
+  text,
+}: {
+  icon: React.ReactNode;
+  text: string;
+}) => {
+  return (
+    <button className="flex items-center gap-2 px-4 py-2 border rounded-full border-white/20 text-white hover:bg-white/10 hover:text-secondary/90 transition">
+      {icon}
+      <span className="text-sm">{text}</span>
+    </button>
+  );
+};
+
+export default function Home() {
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -22,21 +37,4 @@ const Home = () => {
       </header>
     </div>
   );
-};
-
-const ButtonItem = ({
-  icon,
-  text,
-}: {
-  icon: React.ReactNode;
-  text: string;
-}) => {
-  return (
-    <button className="flex items-center gap-2 px-4 py-2 border rounded-full border-white/20 text-white hover:bg-white/10 hover:text-secondary/90 transition">
-      {icon}
-      <span className="text-sm">{text}</span>
-    </button>
-  );
-};
-
-export default Home;
+}

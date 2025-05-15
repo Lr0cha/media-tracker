@@ -4,7 +4,7 @@ export function sanitizeMediaType(
 ): "ANIME" | "MANGA" {
   const allowedTypes = ["ANIME", "MANGA"] as const;
 
-  if (value && allowedTypes.includes(value as any)) {
+  if (value && allowedTypes.includes(value as "ANIME" | "MANGA")) {
     return value as "ANIME" | "MANGA";
   }
 

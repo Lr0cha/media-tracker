@@ -7,7 +7,7 @@ import {
 } from "../validators/dialog-media-validators";
 import { revalidatePath } from "next/cache";
 
-export async function addMedia(formData: DialogMediaFormData) {
+async function getSupabaseUser() {
   const supabase = await createClient();
 
   //find authenticated user
@@ -16,8 +16,14 @@ export async function addMedia(formData: DialogMediaFormData) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    throw new Error("Error finding user");
+    throw new Error("User not authenticated");
   }
+
+  return { supabase, user };
+}
+
+export async function addMedia(formData: DialogMediaFormData) {
+  const { supabase, user } = await getSupabaseUser();
 
   // validate form data
   const parsedData = dialogMediaFormSchema.safeParse(formData);
@@ -41,16 +47,7 @@ export async function addMedia(formData: DialogMediaFormData) {
 }
 
 export async function editMedia(id: number, formData: DialogMediaFormData) {
-  const supabase = await createClient();
-
-  //find authenticated user
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    throw new Error("Error finding user");
-  }
+  const { supabase, user } = await getSupabaseUser();
 
   // validate form data
   const parsedData = dialogMediaFormSchema.safeParse(formData);
@@ -74,16 +71,8 @@ export async function editMedia(id: number, formData: DialogMediaFormData) {
 }
 
 export async function deleteMedia(id: number) {
-  const supabase = await createClient();
+  const { supabase, user } = await getSupabaseUser();
 
-  //find authenticated user
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    throw new Error("Error finding user");
-  }
   const { error } = await supabase.from("medias").delete().match({
     user_id: user.id,
     id: id,
