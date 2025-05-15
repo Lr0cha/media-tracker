@@ -29,4 +29,24 @@ Este projeto utilizará as seguintes tecnologias e ferramentas:
 
 ## 🖼️ Imagens do Projeto
 
+<details>
+    <summary><b>Home</b></summary>
+    <img src="./public/previews/homePage.png" width="700px" alt="HomePage">
+</details>
+
+<details>
+    <summary><b>Login</b></summary>
+    <img src="./public/previews/loginPage.png" width="700px" alt="LoginPage">
+</details>
+
+<details>
+    <summary><b>Media</b></summary>
+    <img src="./public/previews/mediaPage.png" width="700px" alt="MediaPage">
+</details>
+
+<details>
+    <summary><b>Search</b></summary>
+    <img src="./public/previews/searchPage.png" width="700px" alt="SearchPage">
+</details>
+
 ...
