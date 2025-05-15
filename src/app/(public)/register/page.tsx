@@ -25,7 +25,9 @@ function SingUpContent() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4">
       <div className="mb-8">
-        <Clapperboard className=" w-8 h-8 sm:w-13 sm:h-13 text-destructive" />
+        <Link href="/">
+          <Clapperboard className=" w-8 h-8 sm:w-13 sm:h-13 text-destructive hover:scale-125 transition" />
+        </Link>
       </div>
 
       <Card className="w-full max-w-md p-6 bg-card relative">

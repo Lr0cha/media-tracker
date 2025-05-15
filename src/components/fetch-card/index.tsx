@@ -22,9 +22,11 @@ const FetchCard = ({ data, mediaType }: MediaProps) => {
           </div>
         )}
         <DialogMediaButton
-          mediaTitle={data.title.english}
-          mediaImage={data.coverImage.large ?? ""}
-          mediaType={mediaType}
+          formData={{
+            title: data.title.english,
+            cover_image: data.coverImage.large,
+            type: mediaType.toLowerCase() as "anime" | "manga",
+          }}
         />
       </div>
 

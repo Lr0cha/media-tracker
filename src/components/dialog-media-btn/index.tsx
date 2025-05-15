@@ -27,49 +27,70 @@ import {
   dialogMediaFormSchema,
   DialogMediaFormData,
 } from "@/lib/validators/dialog-media-validators";
-import { addMedia } from "@/lib/actions/dialog-media-action";
+import {
+  addMedia,
+  editMedia,
+  deleteMedia,
+} from "@/lib/actions/dialog-media-action";
 import { useState } from "react";
 
 interface DialogMediaButtonProps {
-  mediaTitle: string;
-  mediaType: string;
-  mediaImage: string;
+  formData?: Partial<DialogMediaFormData> & { id?: number };
   isEdit?: boolean;
+  onClose?: () => void;
 }
 
 const DialogMediaButton = ({
-  mediaTitle,
-  mediaType,
-  mediaImage,
+  formData,
   isEdit = false,
+  onClose,
 }: DialogMediaButtonProps) => {
-  const [open, setOpen] = useState(false); //dialog state
+  const [open, setOpen] = useState(false);
 
   const form = useForm<DialogMediaFormData>({
-    //validate form with zod and hook-form
     resolver: zodResolver(dialogMediaFormSchema),
     defaultValues: {
-      title: mediaTitle,
-      cover_image: mediaImage,
-      type: mediaType.toLowerCase() as "anime" | "anime",
-      status: undefined,
-      progress: 0,
-      notes: "",
+      title: formData?.title ?? "",
+      cover_image: formData?.cover_image ?? "",
+      type: formData?.type ?? "anime",
+      status: formData?.status ?? "in progress",
+      progress: formData?.progress ?? 0,
+      notes: formData?.notes ?? "",
     },
   });
 
   const onSubmit = async (data: DialogMediaFormData) => {
-    if (!isEdit) {
+    if (isEdit && formData?.id) {
+      await editMedia(formData.id, data);
+    } else {
       await addMedia(data);
     }
 
     form.reset();
     setOpen(false);
+    onClose?.();
+  };
+
+  const onDelete = async () => {
+    if (formData?.id) {
+      await deleteMedia(formData.id);
+      form.reset();
+      setOpen(false);
+      onClose?.();
+    }
   };
 
   return (
     <div className="absolute right-4 top-4">
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog
+        open={open}
+        onOpenChange={(isOpen) => {
+          setOpen(isOpen);
+          if (!isOpen) {
+            onClose?.();
+          }
+        }}
+      >
         <DialogTrigger asChild>
           <Button
             onClick={() => setOpen(true)}
@@ -101,7 +122,7 @@ const DialogMediaButton = ({
                   <Label htmlFor="type">Type*</Label>
                   <Select disabled>
                     <SelectTrigger id="type">
-                      <SelectValue placeholder={mediaType} />
+                      <SelectValue placeholder={formData?.type} />
                     </SelectTrigger>
                   </Select>
                 </div>
@@ -109,6 +130,7 @@ const DialogMediaButton = ({
                 <div className="flex flex-col flex-1 gap-2">
                   <Label htmlFor="status">Status*</Label>
                   <Select
+                    value={form.watch("status")} //current value of the field in the form
                     onValueChange={(value) =>
                       form.setValue(
                         "status",
@@ -157,7 +179,12 @@ const DialogMediaButton = ({
 
             <DialogFooter>
               {isEdit && (
-                <Button className="bg-secondary cursor-pointer">Delete</Button>
+                <Button
+                  onClick={onDelete}
+                  className="bg-secondary cursor-pointer"
+                >
+                  Delete
+                </Button>
               )}
               <Button
                 type="submit"

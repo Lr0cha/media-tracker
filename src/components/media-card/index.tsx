@@ -4,7 +4,15 @@ import { useState } from "react";
 import { Media } from "@/types/index";
 import DialogMediaButton from "../dialog-media-btn";
 
-const MediaCard = ({ title, cover_image, type, status, progress }: Media) => {
+const MediaCard = ({
+  id,
+  title,
+  cover_image,
+  type,
+  status,
+  progress,
+  notes,
+}: Media) => {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -17,10 +25,21 @@ const MediaCard = ({ title, cover_image, type, status, progress }: Media) => {
       {hovered && (
         <div className="absolute top-0.5 right-0.5 z-10">
           <DialogMediaButton
-            mediaTitle={title}
-            mediaImage={cover_image}
-            mediaType={type}
-            isEdit={true}
+            isEdit
+            formData={{
+              id,
+              title,
+              cover_image,
+              type: type.toLowerCase() as "anime" | "manga",
+              status: status.toLowerCase() as
+                | "in progress"
+                | "planning"
+                | "completed"
+                | "paused",
+              progress,
+              notes: notes || "",
+            }}
+            onClose={() => setHovered(false)}
           />
         </div>
       )}

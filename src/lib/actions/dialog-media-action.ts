@@ -39,3 +39,59 @@ export async function addMedia(formData: DialogMediaFormData) {
 
   revalidatePath("/medias");
 }
+
+export async function editMedia(id: number, formData: DialogMediaFormData) {
+  const supabase = await createClient();
+
+  //find authenticated user
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("Error finding user");
+  }
+
+  // validate form data
+  const parsedData = dialogMediaFormSchema.safeParse(formData);
+
+  if (!parsedData.success) {
+    return { error: parsedData.error.message };
+  }
+
+  const { data } = parsedData;
+
+  const { error } = await supabase.from("medias").update(data).match({
+    user_id: user.id,
+    id: id,
+  });
+
+  if (error) {
+    throw new Error("Error adding media" + error.message);
+  }
+
+  revalidatePath("/medias");
+}
+
+export async function deleteMedia(id: number) {
+  const supabase = await createClient();
+
+  //find authenticated user
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("Error finding user");
+  }
+  const { error } = await supabase.from("medias").delete().match({
+    user_id: user.id,
+    id: id,
+  });
+
+  if (error) {
+    throw new Error("Error deleting media" + error.message);
+  }
+
+  revalidatePath("/medias");
+}
