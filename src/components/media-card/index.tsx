@@ -9,33 +9,27 @@ const MediaCard = ({ title, cover_image, type, status, progress }: Media) => {
 
   return (
     <div
-      className="flex flex-col justify-center items-center w-60 rounded-xl overflow-hidden shadow-lg bg-background border border-muted transition-transform hover:-translate-y-1 hover:shadow-xl"
+      className="relative w-52 h-70 rounded-xl overflow-hidden shadow-md bg-cover bg-center cursor-pointer transition-transform hover:-translate-y-1"
+      style={{ backgroundImage: `url(${cover_image})` }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div className="relative h-36 w-full">
-        <img
-          src={cover_image}
-          alt="Descrição"
-          className="rounded-t-xl object-cover w-full h-full"
-        />
-        {hovered && (
+      {hovered && (
+        <div className="absolute top-0.5 right-0.5 z-10">
           <DialogMediaButton
             mediaTitle={title}
             mediaImage={cover_image}
             mediaType={type}
             isEdit={true}
           />
-        )}
-      </div>
-      <div className="p-3 w-full bg-muted rounded-b-xl">
-        <h3 className="text-base font-semibold text-foreground line-clamp-1">
-          {title}
-        </h3>
-        <div className="text-sm flex justify-between text-muted-foreground">
-          <span className="text-muted-foreground/90">
-            {status[0].toUpperCase() + status.slice(1)}
-          </span>
+        </div>
+      )}
+
+      {/* Overlay */}
+      <div className="absolute bottom-0 left-0 w-full bg-black/60 text-white p-3 space-y-1">
+        <h3 className="text-sm font-semibold line-clamp-2">{title}</h3>
+        <div className="text-xs flex justify-between text-gray-300">
+          <span>{status[0].toUpperCase() + status.slice(1)}</span>
           {type === "manga" ? (
             <span>Cap. {progress}</span>
           ) : type === "anime" ? (
