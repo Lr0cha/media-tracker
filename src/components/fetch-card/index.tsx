@@ -1,4 +1,4 @@
-import AddMediaButton from "../add-media-button";
+import DialogMediaButton from "@/components/dialog-media-btn";
 import { ApiProps } from "@/types/index";
 
 interface MediaProps {
@@ -21,7 +21,11 @@ const FetchCard = ({ data, mediaType }: MediaProps) => {
             <p className="text-gray-600">Capa não encontrada</p>
           </div>
         )}
-        <AddMediaButton mediaTitle={data.title.english} mediaType={mediaType} />
+        <DialogMediaButton
+          mediaTitle={data.title.english}
+          mediaImage={data.coverImage.large ?? ""}
+          mediaType={mediaType}
+        />
       </div>
 
       <div className="flex flex-col p-3 w-full bg-muted rounded-b-xl justify-center items-center gap-3">

@@ -1,3 +1,5 @@
+import { Database } from "./supabase";
+
 //anilist API
 export interface ApiProps {
   id: number;
@@ -9,10 +11,4 @@ export interface ApiProps {
   };
 }
 
-export interface ListMediaCard {
-  title: string;
-  coverImage: string;
-  type: "anime" | "manga";
-  status: "planning" | "in progress" | "completed" | "paused";
-  progress?: number;
-}
+export type Media = Database["public"]["Tables"]["medias"]["Row"];

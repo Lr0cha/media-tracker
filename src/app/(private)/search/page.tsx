@@ -26,9 +26,13 @@ export default async function SearchPage({
         <SearchBar initialSearch={search} mediaType={mediaType} />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 place-items-center">
-        {results.map((media) => (
-          <FetchCard key={media.id} data={media} mediaType={mediaType} />
-        ))}
+        {results.length !== 0 ? (
+          results.map((media) => (
+            <FetchCard key={media.id} data={media} mediaType={mediaType} />
+          ))
+        ) : (
+          <h3>{`No ${mediaType.toLowerCase()} found...`}</h3>
+        )}
       </div>
     </div>
   );

@@ -1,15 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { ListMediaCard } from "@/types/index";
+import { Media } from "@/types/index";
+import DialogMediaButton from "../dialog-media-btn";
 
-const MediaCard = ({
-  title,
-  coverImage,
-  type,
-  status,
-  progress,
-}: ListMediaCard) => {
+const MediaCard = ({ title, cover_image, type, status, progress }: Media) => {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -20,14 +15,17 @@ const MediaCard = ({
     >
       <div className="relative h-36 w-full">
         <img
-          src={coverImage}
+          src={cover_image}
           alt="Descrição"
           className="rounded-t-xl object-cover w-full h-full"
         />
         {hovered && (
-          <button className="absolute h-8 w-8 cursor-pointer top-2 right-2 bg-muted hover:bg-secondary/90 rounded text-2xl font-bold text-foreground shadow">
-            ...
-          </button>
+          <DialogMediaButton
+            mediaTitle={title}
+            mediaImage={cover_image}
+            mediaType={type}
+            isEdit={true}
+          />
         )}
       </div>
       <div className="p-3 w-full bg-muted rounded-b-xl">

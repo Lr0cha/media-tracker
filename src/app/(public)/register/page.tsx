@@ -95,7 +95,7 @@ function SingUpContent() {
 export default function SingUpPage() {
   return (
     <div>
-      <Suspense>
+      <Suspense fallback={<h2>Loading</h2>}>
         <SingUpContent />
       </Suspense>
     </div>

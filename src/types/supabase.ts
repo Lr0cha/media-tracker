@@ -36,30 +36,33 @@ export type Database = {
     Tables: {
       medias: {
         Row: {
-          coverimage: string
+          cover_image: string
           id: number
           inserted_at: string
-          progress: number | null
+          notes: string | null
+          progress: number
           status: string
           title: string
           type: string
           user_id: string
         }
         Insert: {
-          coverimage: string
+          cover_image: string
           id?: number
           inserted_at?: string
-          progress?: number | null
+          notes?: string | null
+          progress: number
           status: string
           title: string
           type: string
           user_id: string
         }
         Update: {
-          coverimage?: string
+          cover_image?: string
           id?: number
           inserted_at?: string
-          progress?: number | null
+          notes?: string | null
+          progress?: number
           status?: string
           title?: string
           type?: string
