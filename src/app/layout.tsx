@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { poppins } from "@/app/fonts";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Media Tracker",
@@ -22,6 +23,7 @@ export default function RootLayout({
         )}
       >
         {children}
+        <Toaster richColors />
       </body>
     </html>
   );

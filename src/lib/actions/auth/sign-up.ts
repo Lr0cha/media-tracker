@@ -1,14 +1,14 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { createClient } from "@/utils/supabase/server";
 import {
   SignUpFormData,
   SignUpFormSchema,
 } from "@/lib/validators/sign-up-validators";
+import { getSupabaseUser } from "@/utils/supabase/auth/getSupabaseUser";
 
 export async function signup(formData: SignUpFormData) {
-  const supabase = await createClient();
+  const { supabase } = await getSupabaseUser();
 
   const parsedData = SignUpFormSchema.safeParse(formData);
 
@@ -22,9 +22,11 @@ export async function signup(formData: SignUpFormData) {
     email: data.email,
     password: data.newPassword,
   });
+
   if (error) {
-    redirect("/register?message=Error signing up");
+    return { error: "Error signing up." };
   }
+
   revalidatePath("/", "layout");
   redirect("/login");
 }

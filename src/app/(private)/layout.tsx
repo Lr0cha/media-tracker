@@ -1,4 +1,4 @@
-import Sidebar from "@/components/sidebar";
+import { Sidebar, MobileHeader } from "@/components/sidebar";
 
 export default function PrivateLayout({
   children,
@@ -12,7 +12,7 @@ export default function PrivateLayout({
 
       {/* Mobile */}
       <div className="md:hidden">
-        <Sidebar.MobileHeader />
+        <MobileHeader />
       </div>
 
       {/*Page*/}

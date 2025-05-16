@@ -1,37 +1,47 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Clapperboard } from "lucide-react";
-import Link from "next/link";
+
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import Link from "next/link";
+import { Clapperboard } from "lucide-react";
+
+import { login } from "@/lib/actions/auth/login";
 import {
   LoginFormData,
   LoginFormSchema,
 } from "@/lib/validators/login-validators";
-import { useSearchParams } from "next/navigation";
-import { login } from "@/lib/actions/auth/login";
-import { Suspense } from "react";
 
-const LoginContent = () => {
-  const searchParams = useSearchParams();
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-  const errorAuth = searchParams.get("message");
+export default function LoginPage() {
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(LoginFormSchema),
   });
 
-  async function onSubmit(data: LoginFormData) {
-    await login(data); // call server action
+  function onSubmit(data: LoginFormData) {
+    startTransition(async () => {
+      const result = await login(data);
+
+      if (result?.error) {
+        //optional chaining
+        toast.error(result.error, {
+          duration: 1500,
+        });
+      }
+    });
   }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4">
       <div className="mb-8">
         <Link href="/">
-          <Clapperboard className=" w-8 h-8 sm:w-13 sm:h-13 text-destructive hover:scale-125 transition" />
+          <Clapperboard className="w-8 h-8 sm:w-13 sm:h-13 text-destructive hover:scale-125 transition" />
         </Link>
       </div>
 
@@ -43,17 +53,14 @@ const LoginContent = () => {
         <CardContent>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="flex flex-col gap-0.5">
-              <Input
-                placeholder="Email address"
-                type="email"
-                {...form.register("email")}
-              />
+              <Input placeholder="Your email" {...form.register("email")} />
               {form.formState.errors.email && (
                 <p className="text-red-500 text-sm">
                   {form.formState.errors.email.message}
                 </p>
               )}
             </div>
+
             <div className="flex flex-col gap-0.5">
               <Input
                 placeholder="Password"
@@ -66,14 +73,13 @@ const LoginContent = () => {
                 </p>
               )}
             </div>
-            {errorAuth && (
-              <p className="text-sm font-medium text-destructive">
-                {errorAuth}
-              </p>
-            )}
 
-            <Button className="w-full bg-secondary cursor-pointer hover:bg-primary/90">
-              Login
+            <Button
+              type="submit"
+              className="w-full bg-secondary cursor-pointer hover:bg-primary/90"
+              disabled={isPending}
+            >
+              {isPending ? "..." : "Login"}
             </Button>
           </form>
 
@@ -89,13 +95,5 @@ const LoginContent = () => {
         </CardContent>
       </Card>
     </div>
-  );
-};
-
-export default function LoginPage() {
-  return (
-    <Suspense fallback={<h2>Loading...</h2>}>
-      <LoginContent />
-    </Suspense>
   );
 }

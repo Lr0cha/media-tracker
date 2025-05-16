@@ -33,6 +33,9 @@ import {
   deleteMedia,
 } from "@/lib/actions/dialog-media-action";
 import { useState } from "react";
+import { toast } from "sonner";
+import { ActionMediaResult } from "@/types";
+import { DialogDescription } from "@radix-ui/react-dialog";
 
 interface DialogMediaButtonProps {
   formData?: Partial<DialogMediaFormData> & { id?: number };
@@ -60,20 +63,33 @@ const DialogMediaButton = ({
   });
 
   const onSubmit = async (data: DialogMediaFormData) => {
-    if (isEdit && formData?.id) {
-      await editMedia(formData.id, data);
-    } else {
-      await addMedia(data);
-    }
+    const result: ActionMediaResult =
+      isEdit && formData?.id
+        ? await editMedia(formData.id, data)
+        : await addMedia(data);
 
-    form.reset(); //clean form fields
+    toast[result.success ? "success" : "error"](result.message, {
+      duration: 1500,
+    });
+
+    form.reset();
     setOpen(false);
     onClose?.();
   };
 
   const onDelete = async () => {
     if (formData?.id) {
-      await deleteMedia(formData.id);
+      const result = await deleteMedia(formData.id);
+      if (result.success) {
+        toast.error(result.message, {
+          icon: "🗑️",
+          duration: 1500,
+        });
+      } else {
+        toast.error(result.message, {
+          duration: 1500,
+        });
+      }
       form.reset();
       setOpen(false);
       onClose?.();
@@ -105,6 +121,7 @@ const DialogMediaButton = ({
             <DialogTitle className="text-center">
               {isEdit ? "Update/Delete Media" : "New Media"}
             </DialogTitle>
+            <DialogDescription>{undefined}</DialogDescription>
           </DialogHeader>
 
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -180,6 +197,7 @@ const DialogMediaButton = ({
             <DialogFooter>
               {isEdit && (
                 <Button
+                  type="button"
                   onClick={onDelete}
                   className="bg-secondary cursor-pointer"
                 >

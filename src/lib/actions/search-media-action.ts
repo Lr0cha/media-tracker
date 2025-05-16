@@ -39,7 +39,6 @@ export async function searchMedia(
     const json = await res.json();
     return json.data.Page.media || [];
   } catch (err) {
-    console.error("Erro na busca:", err);
     return [];
   }
 }

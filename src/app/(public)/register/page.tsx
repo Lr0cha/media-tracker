@@ -11,20 +11,26 @@ import {
 } from "@/lib/validators/sign-up-validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signup } from "@/lib/actions/auth/sign-up";
-import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useTransition } from "react";
+import { toast } from "sonner";
 
-const SingUpContent = () => {
-  const searchParams = useSearchParams();
-
-  const errorAuth = searchParams.get("message");
+export default function SingUpPage() {
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<SignUpFormData>({
     resolver: zodResolver(SignUpFormSchema),
   });
 
-  async function onSubmit(data: SignUpFormData) {
-    await signup(data);
+  function onSubmit(data: SignUpFormData) {
+    startTransition(async () => {
+      const result = await signup(data);
+
+      if (result?.error) {
+        toast.error(result.error, {
+          duration: 1500,
+        });
+      }
+    });
   }
 
   return (
@@ -77,15 +83,14 @@ const SingUpContent = () => {
                   {form.formState.errors.confirmPassword.message}
                 </p>
               )}
-              {errorAuth && (
-                <p className="text-sm font-medium text-destructive">
-                  {errorAuth}
-                </p>
-              )}
             </div>
 
-            <Button className="w-full bg-secondary cursor-pointer hover:bg-primary/90">
-              Sign up
+            <Button
+              type="submit"
+              disabled={isPending}
+              className="w-full bg-secondary hover:bg-primary/90"
+            >
+              {isPending ? "..." : "Sing up"}
             </Button>
           </form>
 
@@ -101,13 +106,5 @@ const SingUpContent = () => {
         </CardContent>
       </Card>
     </div>
-  );
-};
-
-export default function SingUpPage() {
-  return (
-    <Suspense>
-      <SingUpContent />
-    </Suspense>
   );
 }
