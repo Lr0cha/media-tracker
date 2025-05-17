@@ -1,19 +1,26 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import {
   SignUpFormData,
   SignUpFormSchema,
 } from "@/lib/validators/sign-up-validators";
 import { getSupabaseUser } from "@/utils/supabase/auth/getSupabaseUser";
+import { ActionMediaResult } from "@/types";
 
-export async function signup(formData: SignUpFormData) {
+export async function signup(
+  formData: SignUpFormData
+): Promise<ActionMediaResult> {
   const { supabase } = await getSupabaseUser();
 
   const parsedData = SignUpFormSchema.safeParse(formData);
 
   if (!parsedData.success) {
-    return { error: parsedData.error.message };
+    return {
+      success: false,
+      message:
+        "Invalid input: " +
+        parsedData.error.errors.map((e) => e.message).join(", "),
+    };
   }
 
   const { data } = parsedData;
@@ -24,9 +31,16 @@ export async function signup(formData: SignUpFormData) {
   });
 
   if (error) {
-    return { error: "Error signing up." };
+    return {
+      success: false,
+      message: "Failed to sign up. Please try again...",
+    };
   }
 
   revalidatePath("/", "layout");
-  redirect("/login");
+
+  return {
+    success: true,
+    message: "Check your inbox to confirm your email.",
+  };
 }

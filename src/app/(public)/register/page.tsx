@@ -13,10 +13,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signup } from "@/lib/actions/auth/sign-up";
 import { useTransition } from "react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function SingUpPage() {
   const [isPending, startTransition] = useTransition();
-
+  const router = useRouter();
   const form = useForm<SignUpFormData>({
     resolver: zodResolver(SignUpFormSchema),
   });
@@ -25,8 +26,20 @@ export default function SingUpPage() {
     startTransition(async () => {
       const result = await signup(data);
 
-      if (result?.error) {
-        toast.error(result.error, {
+      if (result.success) {
+        toast.success(result.message, {
+          duration: 2000,
+          classNames: {
+            success: "bg-green-400",
+            title: "text-xl",
+            description: "text-xl",
+          },
+        });
+
+        // redirect
+        router.push("/login");
+      } else {
+        toast.error(result.message, {
           duration: 1500,
         });
       }
