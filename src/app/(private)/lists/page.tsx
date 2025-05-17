@@ -22,18 +22,18 @@ export default async function MediaPage({
     (await searchParams).type?.toUpperCase()
   );
 
-  if (medias) {
-    filteredList = medias.filter(
+  const filteredList =
+    medias?.filter(
+      // optional chaining
       (media) => media.type.toUpperCase() === mediaType
-    );
-  }
+    ) || [];
 
   return (
     <div className="space-y-6">
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 place-items-center">
-        {filteredList.map((media) => (
-          <MediaCard key={media.id} {...media} />
-        ))}
+        {filteredList.length !== 0
+          ? filteredList.map((media) => <MediaCard key={media.id} {...media} />)
+          : `No ${mediaType.toLowerCase()}s found on the list ...`}
       </div>
     </div>
   );

@@ -49,6 +49,7 @@ const DialogMediaButton = ({
   onClose,
 }: DialogMediaButtonProps) => {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<DialogMediaFormData>({
     resolver: zodResolver(dialogMediaFormSchema),
@@ -63,6 +64,7 @@ const DialogMediaButton = ({
   });
 
   const onSubmit = async (data: DialogMediaFormData) => {
+    setLoading(true); //button disabled
     const result: ActionMediaResult =
       isEdit && formData?.id
         ? await editMedia(formData.id, data)
@@ -71,13 +73,14 @@ const DialogMediaButton = ({
     toast[result.success ? "success" : "error"](result.message, {
       duration: 1500,
     });
-
     form.reset();
+    setLoading(true);
     setOpen(false);
     onClose?.();
   };
 
   const onDelete = async () => {
+    setLoading(true);
     if (formData?.id) {
       const result = await deleteMedia(formData.id);
       if (result.success) {
@@ -91,6 +94,7 @@ const DialogMediaButton = ({
         });
       }
       form.reset();
+      setLoading(true);
       setOpen(false);
       onClose?.();
     }
@@ -200,6 +204,7 @@ const DialogMediaButton = ({
                   type="button"
                   onClick={onDelete}
                   className="bg-secondary cursor-pointer"
+                  disabled={loading}
                 >
                   Delete
                 </Button>
@@ -207,6 +212,7 @@ const DialogMediaButton = ({
               <Button
                 type="submit"
                 className="bg-neutral-700 cursor-pointer text-amber-50 hover:bg-neutral-600/90"
+                disabled={loading}
               >
                 Save
               </Button>
