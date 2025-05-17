@@ -6,6 +6,7 @@ import {
   SheetTitle,
   SheetContent,
   SheetDescription,
+  SheetClose,
 } from "../ui/sheet";
 import Link from "next/link";
 import { LogOutBtn } from "../log-out-btn";
@@ -16,7 +17,7 @@ const navItems = [
   { icon: BookOpen, label: "Mangas" },
 ];
 
-const SidebarContent = () => {
+const SidebarContent = ({ isMobile = false }: { isMobile?: boolean }) => {
   return (
     <div className="flex w-full flex-col font-medium gap-6 text-lg px-2 py-3">
       <Link
@@ -37,29 +38,34 @@ const SidebarContent = () => {
             </div>
           );
 
-          return isSearch ? (
-            <Button
-              asChild
-              key={label}
-              variant="outline"
-              className="flex cursor-pointer w-3/4 items-center justify-center gap-2 bg-transparent text-accent-foreground"
-            >
-              <Link href="/search">{content}</Link>
-            </Button>
+          const link = isSearch ? (
+            <Link href="/search">{content}</Link>
           ) : (
+            <Link href={`/lists?type=${label.substring(0, 5)}`}>
+              <div className="flex items-center gap-2">
+                <Icon className="h-5 w-5" />
+                <span>{label}</span>
+              </div>
+            </Link>
+          );
+
+          const button = (
             <Button
               asChild
               key={label}
               variant="outline"
               className="flex cursor-pointer w-3/4 items-center justify-center gap-2 bg-transparent text-accent-foreground"
             >
-              <Link href={`/lists?type=${label.substring(0, 5)}`}>
-                <div className="flex items-center gap-2">
-                  <Icon className="h-5 w-5" />
-                  <span>{label}</span>
-                </div>
-              </Link>
+              {link}
             </Button>
+          );
+
+          return isMobile ? (
+            <SheetClose asChild key={label}>
+              {button}
+            </SheetClose>
+          ) : (
+            button
           );
         })}
       </div>
@@ -87,7 +93,8 @@ export function MobileHeader() {
         <SheetContent side="left" className="sm:max-w-xl">
           <SheetTitle className="sr-only">Sidebar</SheetTitle>
           <SheetDescription>{undefined}</SheetDescription>
-          <SidebarContent />
+          {/* isMobile True */}
+          <SidebarContent isMobile />
         </SheetContent>
       </Sheet>
       <h2 className="text-lg font-semibold">Menu</h2>
