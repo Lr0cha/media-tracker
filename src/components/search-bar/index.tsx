@@ -32,13 +32,14 @@ export default function SearchBar({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex w-full gap-3">
+    <form onSubmit={handleSubmit} className="flex w-full max-w-6xl gap-3">
       <SelectTypeMedia
         value={mediaType}
         onChange={(val) => setMediaType(val as "ANIME" | "MANGA")}
       />
 
       <Input
+        className="text-sm xl:text-base"
         placeholder="Search for..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}

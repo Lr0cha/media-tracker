@@ -1,9 +1,6 @@
 import MediaCard from "@/components/media-card";
-import { Media } from "@/types/index";
 import { createClient } from "@/utils/supabase/server";
 import { sanitizeMediaType } from "@/utils/validate";
-
-let filteredList: Media[];
 
 export default async function MediaPage({
   searchParams,
@@ -30,7 +27,7 @@ export default async function MediaPage({
 
   return (
     <div className="space-y-6">
-      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 place-items-center">
+      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 grid-cols-6-3xl max-w-[1800px] gap-6 place-items-center mx-auto">
         {filteredList.length !== 0
           ? filteredList.map((media) => <MediaCard key={media.id} {...media} />)
           : `No ${mediaType.toLowerCase()}s found on the list ...`}

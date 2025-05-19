@@ -43,7 +43,7 @@ export const LogOutBtn = ({
         className={className}
         variant={variant}
       >
-        {label ? label : <LogOut className="size-10" />}
+        {label ? label : <LogOut className="size-10 xl:size-12 2xl:size-20" />}
       </Button>
     </div>
   );

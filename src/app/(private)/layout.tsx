@@ -4,7 +4,7 @@ export default function PrivateLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <>
+    <div className="min-h-screen">
       {/* Desktop */}
       <div className="hidden md:block">
         <Sidebar />
@@ -16,9 +16,9 @@ export default function PrivateLayout({
       </div>
 
       {/*Page*/}
-      <main className="min-h-screen p-4 md:ml-[20%] max-w-6xl mx-auto">
+      <main className="px-4 py-6 md:ml-[20%] max-w-screen mx-auto">
         {children}
       </main>
-    </>
+    </div>
   );
 }

@@ -54,7 +54,7 @@ const SidebarContent = ({ isMobile = false }: { isMobile?: boolean }) => {
               asChild
               key={label}
               variant="outline"
-              className="flex cursor-pointer w-3/4 items-center justify-center gap-2 bg-transparent text-accent-foreground"
+              className="flex cursor-pointer w-3/4 items-center justify-center gap-2 bg-transparent text-accent-foreground text-sm 2xl:text-lg 2xl:h-12"
             >
               {link}
             </Button>
@@ -70,7 +70,7 @@ const SidebarContent = ({ isMobile = false }: { isMobile?: boolean }) => {
         })}
       </div>
 
-      <div className="absolute bottom-10 right-5">
+      <div className="absolute bottom-10 right-5 2xl:right-10">
         <LogOutBtn
           variant="ghost"
           className="h-12 w-12 hover:scale-110 hover:text-destructive active:scale-95 duration-200"

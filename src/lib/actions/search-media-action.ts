@@ -8,7 +8,7 @@ export async function searchMedia(
 ): Promise<ApiProps[]> {
   const query = `
     query ($search: String, $type: MediaType) {
-      Page(perPage: 12) {
+      Page(perPage: 20) {
         media(search: $search, type: $type, isAdult: false) {
           id
           title {
